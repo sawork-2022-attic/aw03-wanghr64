@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class PosServiceImp implements PosService {
@@ -67,10 +68,10 @@ public class PosServiceImp implements PosService {
     }
 
     @Override
-    public List<Product> products(String str) {
+    public List<Product> products(String cate) {
         List<Product> res = new ArrayList<>();
         for (Product p : posDB.getProducts()) {
-            if (p.getName().indexOf(str) != -1)
+            if (p.getCategory().equals(cate))
                 res.add(p);
         }
         return res;
@@ -95,5 +96,10 @@ public class PosServiceImp implements PosService {
     @Override
     public void clear() {
         this.getCart().clear();
+    }
+
+    @Override
+    public Set<String> categories() {
+        return this.posDB.getCategories();
     }
 }

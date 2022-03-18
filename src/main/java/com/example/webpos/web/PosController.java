@@ -20,9 +20,9 @@ public class PosController {
 
     @GetMapping("/")
     public String pos(Model model) {
-        posService.add("PD1", 1);
         model.addAttribute("products", posService.products());
         model.addAttribute("cart", posService.getCart());
+        model.addAttribute("categories", posService.categories());
         return "index";
     }
 
@@ -31,6 +31,7 @@ public class PosController {
         posService.add(pid, 1);
         model.addAttribute("products", posService.products());
         model.addAttribute("cart", posService.getCart());
+        model.addAttribute("categories", posService.categories());
         return "index";
     }
 
@@ -39,6 +40,7 @@ public class PosController {
         posService.delete(pid);
         model.addAttribute("products", posService.products());
         model.addAttribute("cart", posService.getCart());
+        model.addAttribute("categories", posService.categories());
         return "index";
     }
 
@@ -47,6 +49,7 @@ public class PosController {
         posService.modify(pid, -1);
         model.addAttribute("products", posService.products());
         model.addAttribute("cart", posService.getCart());
+        model.addAttribute("categories", posService.categories());
         return "index";
     }
 
@@ -55,6 +58,7 @@ public class PosController {
         posService.add(pid, 1);
         model.addAttribute("products", posService.products());
         model.addAttribute("cart", posService.getCart());
+        model.addAttribute("categories", posService.categories());
         return "index";
     }
 
@@ -63,6 +67,15 @@ public class PosController {
         posService.clear();
         model.addAttribute("products", posService.products());
         model.addAttribute("cart", posService.getCart());
+        model.addAttribute("categories", posService.categories());
+        return "index";
+    }
+
+    @GetMapping("/category")
+    public String catogory(@RequestParam(name = "cate") String cate, Model model) {
+        model.addAttribute("products", posService.products(cate));
+        model.addAttribute("cart", posService.getCart());
+        model.addAttribute("categories", posService.categories());
         return "index";
     }
 

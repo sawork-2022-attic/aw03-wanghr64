@@ -4,6 +4,7 @@ import com.example.webpos.model.Cart;
 import com.example.webpos.model.Product;
 
 import java.util.List;
+import java.util.Set;
 
 public interface PosDB {
 
@@ -15,4 +16,5 @@ public interface PosDB {
 
     public Product getProduct(String productId);
 
+    public Set<String> getCategories();
 }
