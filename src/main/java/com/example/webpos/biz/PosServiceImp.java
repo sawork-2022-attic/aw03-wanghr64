@@ -7,6 +7,7 @@ import com.example.webpos.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -23,7 +24,7 @@ public class PosServiceImp implements PosService {
     public Cart getCart() {
 
         Cart cart = posDB.getCart();
-        if (cart == null){
+        if (cart == null) {
             cart = this.newCart();
         }
         return cart;
@@ -53,7 +54,8 @@ public class PosServiceImp implements PosService {
     public boolean add(String productId, int amount) {
 
         Product product = posDB.getProduct(productId);
-        if (product == null) return false;
+        if (product == null)
+            return false;
 
         this.getCart().addItem(new Item(product, amount));
         return true;
@@ -62,5 +64,36 @@ public class PosServiceImp implements PosService {
     @Override
     public List<Product> products() {
         return posDB.getProducts();
+    }
+
+    @Override
+    public List<Product> products(String str) {
+        List<Product> res = new ArrayList<>();
+        for (Product p : posDB.getProducts()) {
+            if (p.getName().indexOf(str) != -1)
+                res.add(p);
+        }
+        return res;
+    }
+
+    @Override
+    public boolean delete(String productId) {
+        Product product = posDB.getProduct(productId);
+        if (product == null)
+            return false;
+        return this.getCart().deleteItem(new Item(product, 0));
+    }
+
+    @Override
+    public boolean modify(String productId, int amount) {
+        Product product = posDB.getProduct(productId);
+        if (product == null)
+            return false;
+        return this.getCart().modifyItem(new Item(product, amount));
+    }
+
+    @Override
+    public void clear() {
+        this.getCart().clear();
     }
 }

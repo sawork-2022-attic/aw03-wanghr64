@@ -16,4 +16,9 @@ public class Product {
         return getId() + "\t" + getName() + "\t" + getPrice();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return this.id.equals(((Product) obj).id);
+    }
+
 }

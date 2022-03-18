@@ -10,7 +10,20 @@ public class Item {
     private int quantity;
 
     @Override
-    public String toString(){
-        return product.toString() +"\t" + quantity;
+    public String toString() {
+        return product.toString() + "\t" + quantity;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.product.equals(((Item) obj).product);
+    }
+
+    public boolean modify(int num) {
+        if (num > 0 || num < 0 && quantity + num >= 0) {
+            quantity += num;
+            return true;
+        } else
+            return false;
     }
 }

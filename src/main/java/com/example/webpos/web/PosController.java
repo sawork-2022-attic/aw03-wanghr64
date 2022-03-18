@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class PosController {
@@ -19,9 +20,50 @@ public class PosController {
 
     @GetMapping("/")
     public String pos(Model model) {
-        posService.add("PD1",2);
+        posService.add("PD1", 1);
         model.addAttribute("products", posService.products());
         model.addAttribute("cart", posService.getCart());
         return "index";
     }
+
+    @GetMapping("/add")
+    public String add(@RequestParam(name = "pid") String pid, Model model) {
+        posService.add(pid, 1);
+        model.addAttribute("products", posService.products());
+        model.addAttribute("cart", posService.getCart());
+        return "index";
+    }
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam(name = "pid") String pid, Model model) {
+        posService.delete(pid);
+        model.addAttribute("products", posService.products());
+        model.addAttribute("cart", posService.getCart());
+        return "index";
+    }
+
+    @GetMapping("/minus")
+    public String minus(@RequestParam(name = "pid") String pid, Model model) {
+        posService.modify(pid, -1);
+        model.addAttribute("products", posService.products());
+        model.addAttribute("cart", posService.getCart());
+        return "index";
+    }
+
+    @GetMapping("/plus")
+    public String plus(@RequestParam(name = "pid") String pid, Model model) {
+        posService.add(pid, 1);
+        model.addAttribute("products", posService.products());
+        model.addAttribute("cart", posService.getCart());
+        return "index";
+    }
+
+    @GetMapping("/clear")
+    public String clear(Model model) {
+        posService.clear();
+        model.addAttribute("products", posService.products());
+        model.addAttribute("cart", posService.getCart());
+        return "index";
+    }
+
 }
